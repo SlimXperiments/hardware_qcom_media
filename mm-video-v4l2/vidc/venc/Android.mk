@@ -74,12 +74,6 @@ libmm-venc-def += -D_ANDROID_ICS_
 
 include $(CLEAR_VARS)
 
-ifneq ($(TARGET_QCOM_DISPLAY_VARIANT),)
-DISPLAY := display-$(TARGET_QCOM_DISPLAY_VARIANT)
-else
-DISPLAY := display/$(TARGET_BOARD_PLATFORM)
-endif
-
 libmm-venc-inc      := bionic/libc/include
 libmm-venc-inc      += bionic/libstdc++/include
 libmm-venc-inc      += $(LOCAL_PATH)/inc
@@ -89,11 +83,11 @@ endif
 libmm-venc-inc      += $(OMX_VIDEO_PATH)/vidc/common/inc
 libmm-venc-inc      += hardware/qcom/media/mm-core/inc
 libmm-venc-inc      += hardware/qcom/media/libstagefrighthw
-libmm-venc-inc      += hardware/qcom/$(DISPLAY)/libgralloc
+libmm-venc-inc      += $(QCOM_DISPLAY_FOLDER)/libgralloc
 libmm-venc-inc      += frameworks/native/include/media/hardware
 libmm-venc-inc      += frameworks/native/include/media/openmax
 libmm-venc-inc      += hardware/qcom/media/libc2dcolorconvert
-libmm-venc-inc      += hardware/qcom/$(DISPLAY)/libcopybit
+libmm-venc-inc      += $(QCOM_DISPLAY_FOLDER)/libcopybit
 libmm-venc-inc      += frameworks/av/include/media/stagefright
 libmm-venc-inc      += frameworks/av/include/media/hardware
 libmm-venc-inc      += $(venc-inc)
@@ -132,7 +126,7 @@ mm-venc-test720p-inc            += $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr/in
 endif
 mm-venc-test720p-inc            += $(OMX_VIDEO_PATH)/vidc/common/inc
 mm-venc-test720p-inc            += hardware/qcom/media/mm-core/inc
-mm-venc-test720p-inc            += hardware/qcom/$(DISPLAY)/libgralloc
+mm-venc-test720p-inc            += $(QCOM_DISPLAY_FOLDER)/libgralloc
 mm-venc-test720p-inc            += $(venc-inc)
 
 LOCAL_MODULE                    := mm-venc-omx-test720p

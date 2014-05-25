@@ -44,7 +44,7 @@ libOmxVdec-def += -D_ANDROID_ICS_
 libOmxVdec-def += -DUSE_ION
 #endif
 
-ifeq ($(TARGET_QCOM_DISPLAY_VARIANT),caf)
+ifneq ($(TARGET_QCOM_DISPLAY_VARIANT),)
 libOmxVdec-def += -DDISPLAYCAF
 endif
 
@@ -54,12 +54,6 @@ endif
 
 include $(CLEAR_VARS)
 LOCAL_PATH:= $(ROOT_DIR)
-
-ifneq ($(TARGET_QCOM_DISPLAY_VARIANT),)
-DISPLAY := display-$(TARGET_QCOM_DISPLAY_VARIANT)
-else
-DISPLAY := display/$(TARGET_BOARD_PLATFORM)
-endif
 
 libmm-vdec-inc          := bionic/libc/include
 libmm-vdec-inc          += bionic/libstdc++/include
@@ -71,14 +65,14 @@ libmm-vdec-inc          += $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr/include
 endif
 #DRM include - Interface which loads the DRM library
 libmm-vdec-inc	        += $(OMX_VIDEO_PATH)/DivxDrmDecrypt/inc
-libmm-vdec-inc          += hardware/qcom/$(DISPLAY)/libgralloc
+libmm-vdec-inc          += $(QCOM_DISPLAY_FOLDER)/libgralloc
 libmm-vdec-inc          += frameworks/native/include/media/openmax
 libmm-vdec-inc          += frameworks/native/include/media/hardware
 libmm-vdec-inc          += hardware/qcom/media/libc2dcolorconvert
-libmm-vdec-inc          += hardware/qcom/$(DISPLAY)/libcopybit
+libmm-vdec-inc          += $(QCOM_DISPLAY_FOLDER)/libcopybit
 libmm-vdec-inc          += frameworks/av/include/media/stagefright
-libmm-vdec-inc          += hardware/qcom/$(DISPLAY)/libqservice
-libmm-vdec-inc          += hardware/qcom/$(DISPLAY)/libqdutils
+libmm-vdec-inc          += $(QCOM_DISPLAY_FOLDER)/libqservice
+libmm-vdec-inc          += $(QCOM_DISPLAY_FOLDER)/libqdutils
 
 LOCAL_MODULE                    := libOmxVdec
 LOCAL_MODULE_TAGS               := optional

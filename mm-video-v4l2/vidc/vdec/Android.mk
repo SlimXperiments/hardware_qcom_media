@@ -79,19 +79,16 @@ ifeq ($(TARGET_USES_ION),true)
 libOmxVdec-def += -DUSE_ION
 endif
 
+ifneq ($(TARGET_QCOM_DISPLAY_VARIANT),)
+libOmxVdec-def += -DDISPLAYCAF
+endif
+
 # ---------------------------------------------------------------------------------
 # 			Make the Shared library (libOmxVdec)
 # ---------------------------------------------------------------------------------
 
 include $(CLEAR_VARS)
 LOCAL_PATH:= $(ROOT_DIR)
-
-ifneq ($(TARGET_QCOM_DISPLAY_VARIANT),)
-DISPLAY := display-$(TARGET_QCOM_DISPLAY_VARIANT)
-libOmxVdec-def += -DDISPLAYCAF
-else
-DISPLAY := display/$(TARGET_BOARD_PLATFORM)
-endif
 
 libmm-vdec-inc          := bionic/libc/include
 libmm-vdec-inc          += bionic/libstdc++/include
@@ -103,13 +100,13 @@ libmm-vdec-inc          += $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr/include
 endif
 #DRM include - Interface which loads the DRM library
 libmm-vdec-inc	        += $(OMX_VIDEO_PATH)/DivxDrmDecrypt/inc
-libmm-vdec-inc          += hardware/qcom/$(DISPLAY)/libgralloc
+libmm-vdec-inc          += $(QCOM_DISPLAY_FOLDER)/libgralloc
 libmm-vdec-inc          += frameworks/native/include/media/openmax
 libmm-vdec-inc          += frameworks/native/include/media/hardware
 libmm-vdec-inc          += $(vdec-inc)
-libmm-vdec-inc          += hardware/qcom/$(DISPLAY)/libqdutils
+libmm-vdec-inc          += $(QCOM_DISPLAY_FOLDER)/libqdutils
 libmm-vdec-inc          += hardware/qcom/media/libc2dcolorconvert
-libmm-vdec-inc          += hardware/qcom/$(DISPLAY)/libcopybit
+libmm-vdec-inc          += $(QCOM_DISPLAY_FOLDER)/libcopybit
 libmm-vdec-inc          += frameworks/av/include/media/stagefright
 
 
@@ -132,7 +129,7 @@ ifneq ($(filter msm8974 msm8610 msm8226 apq8084 mpq8092,$(TARGET_BOARD_PLATFORM)
 LOCAL_SRC_FILES         += src/omx_vdec_msm8974.cpp
 else
 LOCAL_SHARED_LIBRARIES  += libhardware
-libmm-vdec-inc          += hardware/qcom/$(DISPLAY)/libhwcomposer
+libmm-vdec-inc          += $(QCOM_DISPLAY_FOLDER)/libhwcomposer
 LOCAL_SRC_FILES         += src/power_module.cpp
 LOCAL_SRC_FILES         += src/omx_vdec.cpp
 endif
